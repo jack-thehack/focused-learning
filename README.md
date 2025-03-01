@@ -1,4 +1,12 @@
 # focused-learning
-Small python code that scrapes LinkedIn Learning lessons and adds them as OmniFocus tasks within a dedicated Project  
+Small python script that scrapes a LinkedIn Learning course for lessons and adds them as individual OmniFocus tasks within a dedicated Project  
 
-Tested on my macOS system
+Tested on a macOS 15.3.1 system.
+
+Shell script must be made executable.  It then checks for required software and dependencies then runs the python script.
+
+The Python script opens LinkedIn Learning using Selenium.  The end user needs to log in using their own credentials before alerting the terminal window that you're logged in.  Then input the url you wish to scrape.  Then enter the name of the new OmniFocus project you want all the lessons in.  The lessons are added with added sequentual numbering.  And the duration for each lesson video is added to the Estimated Duration field within OmniFocus.  It then asks for another URL, if there are more courses you wish to add.
+
+Credentials are held within Selenium in case you want to restart the script any time soon, and don't want to have to log in each time.
+
+
