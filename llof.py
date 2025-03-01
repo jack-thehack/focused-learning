@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
 import time
-import math
 import re
 import subprocess
 from selenium import webdriver
@@ -57,22 +56,11 @@ def scrape_course_lessons(driver, course_url):
         course_url = "https://" + course_url
     driver.get(course_url)
 
-    # List iframes for debugging
-    frames = driver.find_elements(By.TAG_NAME, "iframe")
-    print(f"Found {len(frames)} iframes on the course page.")
-    for idx, frame in enumerate(frames):
-        frame_name = frame.get_attribute("name")
-        frame_id = frame.get_attribute("id")
-        print(f"  Iframe #{idx} - name='{frame_name}', id='{frame_id}'")
-
     wait = WebDriverWait(driver, 30)
     try:
         wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "ul.classroom-toc-section__items")))
     except Exception:
         print("Course page did not load as expected or no lesson container found.")
-        driver.save_screenshot("debug_no_lessons.png")
-        with open("debug_no_lessons.html", "w", encoding="utf-8") as f:
-            f.write(driver.page_source)
         return []
 
     lesson_items = driver.find_elements(By.CSS_SELECTOR, "li.classroom-toc-item")
@@ -187,7 +175,6 @@ def main():
             print("Could not create or find the OmniFocus project. Skipping this course.")
             continue
 
-        # Add a sequential number to each task title.
         count = 1
         for lesson in lessons:
             task_title = f"{count} - {lesson['title']}"
